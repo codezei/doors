@@ -1,0 +1,92 @@
+[
+    {
+        "id": "1",
+        "name": "Plato",
+        "price": 150,
+        "description": "Lorem ipsum",
+        "collection": {
+            "name": "Collection Classica",
+            "value": "classica"
+        },
+        "render": {
+            "veneer": [
+                {
+                    "width": 800,
+                    "height": 2000,
+                    "startX": 73,
+                    "startY": 73
+                },
+                {
+                    "width": 70,
+                    "height": 2083,
+                    "startX": 0,
+                    "startY": 0
+                },
+                {
+                    "width": 70,
+                    "height": 2083,
+                    "startX": 876,
+                    "startY": 0
+                },
+                {
+                    "width": 806,
+                    "height": 70,
+                    "startX": 70,
+                    "startY": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "2",
+        "name": "Bicchiere",
+        "price": 260,
+        "description": "Lorem ipsum",
+        "collection": {
+            "name": "Collection Moderna",
+            "value": "moderna"
+        },
+        "render": {
+            "veneer": [
+                {
+                    "width": 577,
+                    "height": 2000,
+                    "startX": 73,
+                    "startY": 73
+                },
+                {
+                    "width": 23,
+                    "height": 2000,
+                    "startX": 850,
+                    "startY": 73
+                },
+                {
+                    "width": 70,
+                    "height": 2083,
+                    "startX": 0,
+                    "startY": 0
+                },
+                {
+                    "width": 70,
+                    "height": 2083,
+                    "startX": 876,
+                    "startY": 0
+                },
+                {
+                    "width": 806,
+                    "height": 70,
+                    "startX": 70,
+                    "startY": 0
+                }
+            ],
+            "decor": [
+                {
+                    "width": 200,
+                    "height": 2000,
+                    "startX": 650,
+                    "startY": 73
+                }
+            ]
+        }
+    }
+]

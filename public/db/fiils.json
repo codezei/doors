@@ -1,0 +1,35 @@
+{
+    "veneer": [
+        {
+            "name": "Ebony",
+            "image": {
+                "thumbnail": "ebony-thumb.jpg",
+                "full": "ebony.jpg"
+            }
+        },
+        {
+            "name": "Oak",
+            "image": {
+                "thumbnail": "oak-thumb.jpg",
+                "full": "oak.jpg"
+            }
+        },
+        {
+            "name": "Apus",
+            "image": {
+                "thumbnail": "apus-thumb.jpg",
+                "full": "apus.jpg"
+            }
+        }
+    ],
+    "decor": [
+        {
+            "name": "Black",
+            "color": "#000"
+        },
+        {
+            "name": "Red",
+            "color": "red"
+        }
+    ]
+}
