@@ -11,7 +11,7 @@ const PromoSection = styled(Section)`
     background-repeat: no-repeat, no-repeat, repeat;
     display: flex;
     align-items: center;
-    min-height: 50vh;
+    min-height: 100vh;
 `
 
 const PromoContent = styled.div`

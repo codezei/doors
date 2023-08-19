@@ -20,16 +20,41 @@
                 "thumbnail": "apus-thumb.jpg",
                 "full": "apus.jpg"
             }
+        },
+        {
+            "name": "Palicandr",
+            "image": {
+                "thumbnail": "palicandr-thumb.jpg",
+                "full": "palicandr.jpg"
+            }
         }
     ],
     "decor": [
         {
             "name": "Black",
-            "color": "#000"
+            "color": "#000",
+            "image": "reflection-2.jpg"
         },
         {
             "name": "Red",
-            "color": "red"
+            "color": "darkred",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "Brown",
+            "color": "brown",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "Gray",
+            "color": "gray",
+            "image": "reflection.jpg"
+        }
+        ,
+        {
+            "name": "White",
+            "color": "white",
+            "image": "reflection.jpg"
         }
     ]
 }

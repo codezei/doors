@@ -2,6 +2,15 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import { Container } from '../styles/global';
 
+const HeaderBlock = styled.header`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 10;
+`
+
 const HeaderRow = styled.div`
     display: flex;
     justify-content: space-between;
@@ -21,7 +30,7 @@ const HeaderMenu = styled.nav`
 
 function Header() {
     return ( 
-        <header>
+        <HeaderBlock>
             <Container>
                 <HeaderRow>
                     <Link to="/">
@@ -29,13 +38,13 @@ function Header() {
                     </Link>
                     <HeaderMenu>
                         <Link to="/">Home</Link>
-                        <Link to="catalog">Catalog</Link>
-                        <Link to="about">About Us</Link>
-                        <Link to="contacts">Contacts</Link>
+                        <Link to="/catalog">Catalog</Link>
+                        <Link to="/about">About Us</Link>
+                        <Link to="/contacts">Contacts</Link>
                     </HeaderMenu>
                 </HeaderRow>
             </Container>
-        </header>
+        </HeaderBlock>
      );
 }
 

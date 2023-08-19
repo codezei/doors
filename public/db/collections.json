@@ -1,25 +1,25 @@
 [
     {
         "id": "1",
-        "name": "Collection Classica",
+        "name": "Classica",
         "value": "classica",
         "image": ""
     },
     {
         "id": "2",
-        "name": "Collection Moderna",
+        "name": "Moderna",
         "value": "moderna",
         "image": ""
     },
     {
         "id": "3",
-        "name": "Collection Artigianale",
+        "name": "Artigianale",
         "value": "artigianale",
         "image": ""
     },
     {
         "id": "4",
-        "name": "Collection Elegante",
+        "name": "Elegante",
         "value": "elegante",
         "image": ""
     }

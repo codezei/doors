@@ -73,25 +73,25 @@ function Collections() {
     const collections = [
         {
             id: '1',
-            name: 'Collection Classica',
+            name: 'Classica',
             value: 'classica',
             image: collectionImg1
         },
         {
             id: '2',
-            name: 'Collection Moderna',
+            name: 'Moderna',
             value: 'moderna',
             image: collectionImg2
         },
         {
             id: '3',
-            name: 'Collection Artigianale',
+            name: 'Artigianale',
             value: 'artigianale',
             image: collectionImg3
         },
         {
             id: '4',
-            name: 'Collection Elegante',
+            name: 'Elegante',
             value: 'elegante',
             image: collectionImg4
         }

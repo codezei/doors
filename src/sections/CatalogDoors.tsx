@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import Filter from '../components/Filter';
-import Doors from '../components/Doors';
+import FilterList from '../components/FilterList';
+import DoorsList from '../components/DoorsList';
 import { Container } from '../styles/global';
 
 const CatalogRow = styled.div`
@@ -12,9 +12,9 @@ function CatalogDoors() {
     return ( 
         <Container>
             <CatalogRow>
-            <Filter></Filter>
-            <Doors></Doors>
-        </CatalogRow>
+                <FilterList></FilterList>
+                <DoorsList></DoorsList>
+            </CatalogRow>
         </Container>
 
      );

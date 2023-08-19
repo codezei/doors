@@ -8,15 +8,15 @@ const DoorsRow = styled.div`
     flex-wrap: wrap;
 `
 
-function Doors() {
+function DoorsList() {
     const {data: doors, error, isLoading} = doorsAPI.useGetDoorsQuery('')
     return ( 
         <DoorsRow>
-            {doors && doors.map((door: IDoor)=>{
+            {!isLoading && doors.map((door: IDoor)=>{
                 return <DoorCard door={door} key={door.id}></DoorCard>
             })}
         </DoorsRow> 
     );
 }
 
-export default Doors;
+export default DoorsList;
