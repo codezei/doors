@@ -12,7 +12,7 @@ function DoorsList() {
     const {data: doors, error, isLoading} = doorsAPI.useGetDoorsQuery('')
     return ( 
         <DoorsRow>
-            {!isLoading && doors.map((door: IDoor)=>{
+            {!isLoading && doors && doors.map((door: IDoor)=>{
                 return <DoorCard door={door} key={door.id}></DoorCard>
             })}
         </DoorsRow> 

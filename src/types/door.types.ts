@@ -15,12 +15,18 @@ interface IRender {
     decor?: IRenderPart[]
 }
 interface IRenderPart {
+    width: (string | number) [],
+    height: (string | number) [],
+    startX: (string | number) [],
+    startY: (string | number) [],
+}
+
+interface IRenderData {
     width: number,
     height: number,
     startX: number,
     startY: number,
 }
-
 interface IFills {
     veneer: IFillVeneer[],
     decor?: IFillDecor[]
@@ -38,26 +44,19 @@ interface IFillDecor {
     image: string,
 }
 
-interface IDoorImageProps {
-    render: {
-        veneer: IRenderPart[],
-        decor?: IRenderPart[]
-    },
-    fills: IFills,
-    activeVeneerProps?: IFillVeneer | null,
-    activeDecorProps?: IFillDecor | null
-}
 
 interface IParams {
-    widthDoor: number;
     heightDoor: number;
+    widthDoor: number;
     widthPlatband: number;
     gapBottom: number;
     gapSide: number;
+    scale: number; 
     widthBlock: number;
     heightBlock: number;
-    scale: number; 
+    handleWidth: number;
+    handleHeight: number;
 }
 
 
-export type {IDoor, IRenderPart, IRender, IFillVeneer, IFillDecor, IFills, IDoorImageProps, IParams}
+export type {IDoor, IRenderPart, IRender, IFillVeneer, IFillDecor, IFills, IParams, IRenderData}

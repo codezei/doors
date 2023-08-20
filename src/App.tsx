@@ -15,7 +15,7 @@ function App() {
         <Route path="/catalog" element={<Catalog />}>
           <Route path=":collection" element={<Catalog />}></Route>
         </Route>
-        <Route path=":door" element={<Door />}></Route>
+        <Route path=":id" element={<Door />}></Route>
       </Routes>
     </div>
   );

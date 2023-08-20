@@ -49,12 +49,16 @@
             "name": "Gray",
             "color": "gray",
             "image": "reflection.jpg"
-        }
-        ,
+        },
         {
             "name": "White",
             "color": "white",
             "image": "reflection.jpg"
+        },
+        {
+            "name": "Gold",
+            "color": "#785f00",
+            "image": "reflection-2.jpg"
         }
     ]
 }

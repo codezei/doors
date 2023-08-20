@@ -37,7 +37,7 @@ const DoorCard: React.FC<IDoorProps> = ({door}) => {
     const {data: fills, error, isLoading} = doorsAPI.useGetFillsQuery('')
     return ( 
         <Door to={'/' + door.id}>
-            {!isLoading && <DoorView render={door.render} fills={fills}></DoorView>} 
+            {!isLoading && <DoorView render={door.render}></DoorView>} 
             {!isLoading && <DoorInfo>
                 <p>Model: <b>{door.name}</b></p>
                 <p>Collection: <b>{door.collection.name}</b></p>

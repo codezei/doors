@@ -49,7 +49,7 @@
         "render": {
             "veneer": [
                 {
-                    "width": [577],
+                    "width": ["widthDoor", -200, -23],
                     "height": ["heightDoor"],
                     "startX": ["widthPlatband", "gapSide"],
                     "startY": ["widthPlatband", "gapSide"]
@@ -57,7 +57,7 @@
                 {
                     "width": [23],
                     "height": ["heightDoor"],
-                    "startX": ["widthPlatband", "gapSide", 577, 200],
+                    "startX": ["widthPlatband", "gapSide", "widthDoor", -23],
                     "startY": ["widthPlatband", "gapSide"]
                 },
                 {
@@ -84,7 +84,7 @@
                 {
                     "width": [200],
                     "height": ["heightDoor"],
-                    "startX": ["widthPlatband", "gapSide", 577],
+                    "startX": ["widthPlatband", "gapSide", "widthDoor", -200, -23],
                     "startY": ["widthPlatband", "gapSide"]
                 }
             ]
@@ -110,7 +110,7 @@
                 {
                     "width": [200],
                     "height": ["heightDoor"],
-                    "startX": ["widthPlatband", "gapSide", 200, 400],
+                    "startX": ["widthPlatband", "gapSide", "widthDoor", -200],
                     "startY": ["widthPlatband", "gapSide"]
                 },
                 {
@@ -135,7 +135,7 @@
             ],
             "decor": [
                 {
-                    "width": [400],
+                    "width": ["widthDoor", -200, -200],
                     "height": ["heightDoor"],
                     "startX": ["widthPlatband", "gapSide", 200],
                     "startY": ["widthPlatband", "gapSide"]
