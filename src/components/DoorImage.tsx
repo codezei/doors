@@ -19,8 +19,6 @@ interface IDoorImageProps {
 
 
 const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps})=> {
-
-    const {data: fills, error, isLoading} = doorsAPI.useGetFillsQuery('')
     class Params implements IParams {
 
         heightDoor: number;
@@ -63,9 +61,6 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
     const canvasFillHorizontalRef = React.useRef<HTMLCanvasElement>(null);
     const canvasDecorRef = React.useRef<HTMLCanvasElement>(null);
 
-    const activeVeneer: IFillVeneer = activeVeneerProps || fills.veneer[Math.floor(Math.random() * fills.veneer.length)]
-    const activeDecor: IFillDecor | undefined = activeDecorProps || (fills?.decor && fills?.decor[Math.floor(Math.random() * fills.decor.length)])
-
     function transformRenderData (data: IRender) : {veneer: IRenderData[], decor?: IRenderData[]} {
         let result = Object.fromEntries(
             Object.entries(data).map(([typeRenderKey, typeRenderValue] : [string, IRenderPart[]]) => {
@@ -95,12 +90,12 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
 
 
     function drawDoor () {
-        if (canvasBlockRef.current && canvasFillRef.current && canvasFillHorizontalRef.current) {
+        if (canvasBlockRef.current && canvasFillRef.current && canvasFillHorizontalRef.current && activeVeneerProps) {
             const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d");
             const fillCtx : CanvasRenderingContext2D | null = canvasFillRef.current.getContext("2d");
             const fillHorizontalCtx : CanvasRenderingContext2D | null = canvasFillHorizontalRef.current.getContext("2d");
             const fillImage : HTMLImageElement = new Image()
-            fillImage.src = process.env.PUBLIC_URL +'/'+ activeVeneer.image.full
+            fillImage.src = process.env.PUBLIC_URL +'/'+ activeVeneerProps.image.full
             const furnitureImage : HTMLImageElement = new Image ()
             furnitureImage.src = process.env.PUBLIC_URL +'doorhandle.png'
 
@@ -157,11 +152,11 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
             }
             
         }
-        if (activeDecor && canvasDecorRef.current && canvasBlockRef.current) {
+        if (activeDecorProps && canvasDecorRef.current && canvasBlockRef.current) {
             const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d");
             const decorCtx : CanvasRenderingContext2D | null = canvasDecorRef.current.getContext("2d");
             const decorImage : HTMLImageElement = new Image ()
-            decorImage.src = process.env.PUBLIC_URL +'/'+ activeDecor.image
+            decorImage.src = process.env.PUBLIC_URL +'/'+ activeDecorProps.image
             decorImage.onload = function (): void {
                 // отрисовка текстуры на полотно
                 decorCtx?.drawImage(decorImage, 0, 0, decorImage.width, decorImage.height);
@@ -179,7 +174,7 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                             // отрисовка вырезанных участков
                             doorCtx.putImageData(decorImageData, decorItem.startX, decorItem.startY);
                             doorCtx.globalAlpha = 0.95
-                            doorCtx.fillStyle = activeDecor.color;
+                            doorCtx.fillStyle = activeDecorProps.color;
                             doorCtx.fillRect(
                                 decorItem.startX,
                                 decorItem.startY,
@@ -228,11 +223,11 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                 height={doorParams.heightBlock}
                 ref={canvasFillRef}
             ></CanvasTemp>
-            <CanvasTemp
-                width={doorParams.widthBlock}
-                height={doorParams.heightBlock}
+            <CanvasDoor
+                width={doorParams.heightBlock}
+                height={doorParams.widthBlock}
                 ref={canvasFillHorizontalRef}
-            ></CanvasTemp>
+            ></CanvasDoor>
             <CanvasTemp
                 width={doorParams.widthBlock}
                 height={doorParams.heightBlock}

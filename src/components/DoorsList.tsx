@@ -9,11 +9,12 @@ const DoorsRow = styled.div`
 `
 
 function DoorsList() {
-    const {data: doors, error, isLoading} = doorsAPI.useGetDoorsQuery('')
+    const {data: doors, error : errorDoors, isLoading : isLoadingDoors} = doorsAPI.useGetDoorsQuery('')
+    const {data: fills, error : errorFills, isLoading : isLoadingFills} = doorsAPI.useGetFillsQuery('')
     return ( 
         <DoorsRow>
-            {!isLoading && doors && doors.map((door: IDoor)=>{
-                return <DoorCard door={door} key={door.id}></DoorCard>
+            {!isLoadingFills && fills && !isLoadingDoors && doors && doors.map((door: IDoor)=>{
+                return <DoorCard door={door} fills={fills} key={door.id}></DoorCard>
             })}
         </DoorsRow> 
     );

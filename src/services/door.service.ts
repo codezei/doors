@@ -13,7 +13,7 @@ export const doorsAPI = createApi({
             query: () => ({
                 url: '/doors.json'
             }),
-            transformResponse: (response: IDoor[]) => {
+            transformResponse: (response: IDoor[], id) => {
                 return simulatedDelay(response, 5000)
             }
         }),

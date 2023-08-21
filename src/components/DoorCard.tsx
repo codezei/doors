@@ -1,12 +1,13 @@
 
 import { styled } from 'styled-components';
-import type { IDoor } from '../types/door.types';
+import type { IDoor, IFills } from '../types/door.types';
 import DoorImage from './DoorImage';
 import { doorsAPI } from '../services/door.service';
 import { Link } from 'react-router-dom';
 
 interface IDoorProps {
-    door: IDoor
+    door: IDoor,
+    fills: IFills
 }
 
 const Door = styled(Link)`
@@ -33,16 +34,20 @@ const DoorView = styled(DoorImage)`
 `
 
 
-const DoorCard: React.FC<IDoorProps> = ({door}) => {
-    const {data: fills, error, isLoading} = doorsAPI.useGetFillsQuery('')
+const DoorCard: React.FC<IDoorProps> = ({door, fills}) => {
+    
     return ( 
         <Door to={'/' + door.id}>
-            {!isLoading && <DoorView render={door.render}></DoorView>} 
-            {!isLoading && <DoorInfo>
+            <DoorView 
+                render={door.render} 
+                activeDecorProps={fills?.decor && fills?.decor[Math.floor(Math.random() * fills.decor.length)]} 
+                activeVeneerProps={fills.veneer[Math.floor(Math.random() * fills.veneer.length)]}
+            ></DoorView>
+            <DoorInfo>
                 <p>Model: <b>{door.name}</b></p>
                 <p>Collection: <b>{door.collection.name}</b></p>
                 <p>Price: <b>{door.price} $</b></p>
-            </DoorInfo>}
+            </DoorInfo>
         </Door> 
     );
 }

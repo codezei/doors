@@ -32,17 +32,17 @@
     "decor": [
         {
             "name": "Black",
-            "color": "#000",
+            "color": "black",
             "image": "reflection-2.jpg"
         },
         {
-            "name": "Red",
+            "name": "Darkred",
             "color": "darkred",
             "image": "reflection.jpg"
         },
         {
-            "name": "Brown",
-            "color": "brown",
+            "name": "Blue",
+            "color": "darkblue",
             "image": "reflection.jpg"
         },
         {

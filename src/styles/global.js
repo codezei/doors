@@ -200,13 +200,7 @@ body {
 }
 `
 
-const Container = styled.div`
-    max-width: 1170px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 15px;
-`
+
 
 const Section = styled.div`
 padding: 100px 0
@@ -221,4 +215,24 @@ const Button = styled.a`
   text-decoration: none;
 `
 
-export { Container, GlobalStyles, Section, Button }
+const Container = styled.div`
+    max-width: 1170px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+`
+
+const Col = styled.div(props=>{ return `
+  padding: 0 15px;
+`})
+
+
+export { Container, Row, Col, GlobalStyles, Section, Button }
