@@ -1,51 +1,29 @@
 import {Link} from 'react-router-dom'
-import styled from 'styled-components'
-import { Container } from '../styles/global';
+import { Container, Row, Navbar, Nav } from 'react-bootstrap';
 
-const HeaderBlock = styled.header`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    z-index: 10;
-`
-
-const HeaderRow = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-`
-const HeaderMenu = styled.nav`
-    display: flex;
-    align-items: center;
-    a {
-        color: inherit;
-        text-decoration: none;
-        padding: 0.5rem 1rem
-    }
-`
 
 
 function Header() {
     return ( 
-        <HeaderBlock>
-            <Container>
-                <HeaderRow>
-                    <Link to="/">
-                        <img src="" alt="" />
-                    </Link>
-                    <HeaderMenu>
-                        <Link to="/">Home</Link>
-                        <Link to="/catalog">Catalog</Link>
-                        <Link to="/about">About Us</Link>
-                        <Link to="/contacts">Contacts</Link>
-                    </HeaderMenu>
-                </HeaderRow>
-            </Container>
-        </HeaderBlock>
-     );
+        <header>
+            <Navbar expand="lg" className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand as={Link} to="/">DoorSStyle</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+                        <Nav>
+                        <Nav.Link as={Link} to="/">
+                            Home
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/about">
+                            About Us
+                        </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </header>
+    );
 }
 
 export default Header;

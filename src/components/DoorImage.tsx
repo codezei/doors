@@ -2,7 +2,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { IFillVeneer, IFills, IRenderPart, IRenderData, IFillDecor, IParams, IRender } from '../types/door.types';
-import { doorsAPI } from '../services/door.service';
+import { doorsAPI, Params } from '../services/door.service';
 
 const CanvasDoor = styled.canvas`
 width: 200px;
@@ -14,45 +14,16 @@ display: none;
 interface IDoorImageProps {
     render: IRender,
     activeVeneerProps?: IFillVeneer | null,
-    activeDecorProps?: IFillDecor | null
+    activeDecorProps?: IFillDecor | null,
+    doorWidth?: number,
+    doorHeight?: number
 }
 
 
-const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps})=> {
-    class Params implements IParams {
+const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps, doorWidth, doorHeight})=> {
 
-        heightDoor: number;
-        widthDoor: number;
-        widthPlatband: number;
-        gapBottom: number;
-        gapSide: number;
-        scale: number;
-        widthBlock: number;
-        heightBlock: number;
-        handleWidth: number;
-        handleHeight: number;
-        constructor(
-            heightDoor: number,
-            widthDoor: number,
-            widthPlatband: number,
-            gapBottom: number,
-            gapSide: number,
-            scale: number,
-        ) {
-            this.heightDoor = heightDoor;
-            this.widthDoor = widthDoor;
-            this.widthPlatband = widthPlatband;
-            this.gapBottom = gapBottom;
-            this.gapSide = gapSide;
-            this.scale = scale;
-            this.widthBlock = (this.widthDoor + this.widthPlatband * 2 + this.gapSide * 2) * this.scale;
-            this.heightBlock = (this.heightDoor + this.gapBottom + this.widthPlatband + this.gapSide) * this.scale;
-            this.handleWidth = (this.widthPlatband + this.gapSide + 25) * this.scale;
-            this.handleHeight = (this.heightDoor + this.gapBottom + this.widthPlatband + this.gapSide - 1050) * this.scale
-        }
-    }
-
-    const doorParams: IParams = new Params (2000, 800,  70, 10, 3, 0.4)
+    // const doorParams: IParams = new Params (2000, 800,  70, 10, 3, 0.4)
+    const [doorParams, setDoorParams] = React.useState<IParams>(new Params (doorHeight || 2000, doorWidth || 800,  70, 10, 3, 0.4))
     const [renderData, setRenderData] = React.useState<{veneer: IRenderData[], decor?: IRenderData[]}>(transformRenderData(render))
     
 
@@ -60,6 +31,8 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
     const canvasFillRef = React.useRef<HTMLCanvasElement>(null);
     const canvasFillHorizontalRef = React.useRef<HTMLCanvasElement>(null);
     const canvasDecorRef = React.useRef<HTMLCanvasElement>(null);
+
+
 
     function transformRenderData (data: IRender) : {veneer: IRenderData[], decor?: IRenderData[]} {
         let result = Object.fromEntries(
@@ -90,6 +63,7 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
 
 
     function drawDoor () {
+
         if (canvasBlockRef.current && canvasFillRef.current && canvasFillHorizontalRef.current && activeVeneerProps) {
             const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d");
             const fillCtx : CanvasRenderingContext2D | null = canvasFillRef.current.getContext("2d");
@@ -98,6 +72,10 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
             fillImage.src = process.env.PUBLIC_URL +'/'+ activeVeneerProps.image.full
             const furnitureImage : HTMLImageElement = new Image ()
             furnitureImage.src = process.env.PUBLIC_URL +'doorhandle.png'
+
+            if (doorCtx) {
+                doorCtx.clearRect(0, 0, canvasBlockRef.current.width, canvasBlockRef.current.height)
+            }
 
 
             fillImage.onload = function (): void {
@@ -110,8 +88,10 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                 // отрисовка горизонтальной текстуры на полотно
                 if (canvasFillHorizontalRef.current) {
                     fillHorizontalCtx?.drawImage(fillImage, 0, 0, canvasFillHorizontalRef.current.width, canvasFillHorizontalRef.current.width);
-                    fillHorizontalCtx?.translate(canvasFillHorizontalRef.current.width, 0);
-                    fillHorizontalCtx?.rotate((90 * Math.PI) / 180);
+                    if (!fillHorizontalCtx?.getTransform().e) {
+                        fillHorizontalCtx?.translate(canvasFillHorizontalRef.current.width, 0);
+                        fillHorizontalCtx?.rotate((90 * Math.PI) / 180);
+                    }
                 }
                 
 
@@ -125,6 +105,7 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                         veneerItem.width,
                         veneerItem.height
                     );
+
                     if (fillImageData) {
                         if (doorCtx) {
                             // отрисовка вырезанных участков
@@ -211,6 +192,16 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
         
     }, [activeDecorProps, activeVeneerProps])
 
+    React.useEffect(()=>{
+        if (renderData && doorHeight && doorWidth) {
+            setDoorParams(new Params (doorHeight, doorWidth,  70, 10, 3, 0.4))
+            setRenderData(transformRenderData(render))
+            drawDoor()
+   
+        }
+        
+    }, [doorWidth, doorHeight])
+
     return ( 
         <>
             <CanvasDoor
@@ -223,11 +214,11 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                 height={doorParams.heightBlock}
                 ref={canvasFillRef}
             ></CanvasTemp>
-            <CanvasDoor
+            <CanvasTemp
                 width={doorParams.heightBlock}
                 height={doorParams.widthBlock}
                 ref={canvasFillHorizontalRef}
-            ></CanvasDoor>
+            ></CanvasTemp>
             <CanvasTemp
                 width={doorParams.widthBlock}
                 height={doorParams.heightBlock}

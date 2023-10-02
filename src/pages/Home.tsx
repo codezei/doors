@@ -1,12 +1,12 @@
-import Collections from '../sections/Collections';
 import Promo from '../sections/Promo';
+import Catalog from '../sections/Catalog';
 
 function Home() {
     return ( 
-    <>
+    <main>
         <Promo></Promo>
-        <Collections></Collections>
-    </> 
+        <Catalog></Catalog>
+    </main> 
     );
 }
 

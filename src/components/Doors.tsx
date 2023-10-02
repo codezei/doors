@@ -1,23 +1,25 @@
-import { styled } from 'styled-components';
-import DoorCard from './DoorCard';
+
+import Door from './Door';
 import { doorsAPI } from '../services/door.service';
 import type { IDoor } from '../types/door.types';
+import {Row, Col} from "react-bootstrap"
 
-const DoorsRow = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-`
 
-function DoorsList() {
+function Doors() {
     const {data: doors, error : errorDoors, isLoading : isLoadingDoors} = doorsAPI.useGetDoorsQuery('')
     const {data: fills, error : errorFills, isLoading : isLoadingFills} = doorsAPI.useGetFillsQuery('')
     return ( 
-        <DoorsRow>
+        <Row>
             {!isLoadingFills && fills && !isLoadingDoors && doors && doors.map((door: IDoor)=>{
-                return <DoorCard door={door} fills={fills} key={door.id}></DoorCard>
+                return (
+                <Col xs={"auto"} key={door.id}>
+                    <Door door={door} fills={fills}></Door>
+                </Col>
+                )
+                
             })}
-        </DoorsRow> 
+        </Row> 
     );
 }
 
-export default DoorsList;
+export default Doors;
