@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { doorsAPI } from '../services/door.service'
 import doorReducer from './reducers/doorSlice'
+import orderReducer from './reducers/orderSlice'
 
 
 const rootReducer = combineReducers({
   doorReducer,
+  orderReducer,
   [doorsAPI.reducerPath]: doorsAPI.reducer
 })
 

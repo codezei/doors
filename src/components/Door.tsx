@@ -1,5 +1,6 @@
 
 import type { IDoor, IFills } from '../types/door.types';
+import { useParams, useSearchParams } from "react-router-dom";
 import DoorImage from './DoorImage';
 import { doorsAPI } from '../services/door.service';
 import { Link } from 'react-router-dom';
@@ -13,9 +14,9 @@ interface IDoorProps {
 
 
 const Door: React.FC<IDoorProps> = ({door, fills}) => {
-    
+
     return ( 
-        <Card as={Link} to={'/' + door.id}>
+        <Card as={Link} to={`/${door.id}`}>
             <Card.Body>
                 <DoorImage 
                     render={door.render} 

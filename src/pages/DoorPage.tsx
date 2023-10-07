@@ -1,10 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { doorsAPI } from "../services/door.service";
 import React, { ChangeEvent } from "react";
 import { IDoor, IFillDecor, IFillVeneer } from "../types/door.types";
 import DoorImage from "../components/DoorImage";
 import { styled } from "styled-components";
-// import { Col, Container, Row } from "../styles/global";
 import Loader from "../components/Loader";
 import { Card, Container, Col, Row, ListGroup, Button, Form } from "react-bootstrap";
 
@@ -25,19 +24,22 @@ const Fill = styled.button<{ $active: boolean }>`
 
 function DoorPage() {
     const { id } = useParams()
+
     const { door } = doorsAPI.useGetDoorsQuery(undefined, {
         selectFromResult: ({ data }) => ({
             door: data?.filter((door) => door.id === id)[0],
         }),
     })
+
     const { data: fills, error: errorFills, isLoading: isLoadingFills } = doorsAPI.useGetFillsQuery('')
 
     const [activeVeneer, setActiveVeneer] = React.useState<IFillVeneer | null>(null)
     const [activeDecor, setActiveDecor] = React.useState<IFillDecor | null>(null)
-    const [order, setOrder] = React.useState({})
-    const [doorParams, setDoorParams] = React.useState({
+
+    const [order, setOrder] = React.useState({
         width: 800,
         height: 2000,
+        opening: 'left'
     })
     const [doorLoad, setDoorLoad] = React.useState(false)
 
@@ -49,10 +51,13 @@ function DoorPage() {
     }
     function changeDoorParamHandler (e: ChangeEvent<HTMLInputElement>) {
         if (+e.target.value < +e.target.max && +e.target.value > +e.target.min) {
-            setDoorParams({...doorParams, [e.target.name]: +e.target.value})
+            setOrder({...order, [e.target.name]: +e.target.value})
         }
         
     } 
+    function changeDoorOpeningHandler (e: ChangeEvent<HTMLInputElement>) {
+        setOrder({...order, [e.target.name]: e.target.value})
+    }
 
 
     React.useEffect(() => {
@@ -76,7 +81,7 @@ function DoorPage() {
                         <Card.Body>
                             <Row>
                                 <Col xs={"auto"}>
-                                    {doorLoad ? <Loader></Loader> : door && <DoorImage render={door.render} activeDecorProps={activeDecor} activeVeneerProps={activeVeneer} doorHeight={doorParams.height} doorWidth={doorParams.width}></DoorImage>}
+                                    {doorLoad ? <Loader></Loader> : door && <DoorImage render={door.render} activeDecorProps={activeDecor} activeVeneerProps={activeVeneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>}
                                 </Col>
                                 <Col>
                                     <ListGroup variant="flush">
@@ -102,15 +107,9 @@ function DoorPage() {
                                                 })}
                                             </ListGroup.Item>
                                         }
-
-
-
-
                                     </ListGroup>
-
                                 </Col>
                             </Row>
-
                         </Card.Body>
                         <Card.Footer>
                             <Form>
@@ -118,22 +117,22 @@ function DoorPage() {
                                     <Col>
                                         <Form.Group className="mb-3">
                                             <Form.Label>Door height</Form.Label>
-                                            <Form.Control type="number" placeholder="Enter door height" name="height" onChange={changeDoorParamHandler} value={doorParams.height} min={1800} max={2200} />
+                                            <Form.Control type="number" placeholder="Enter door height" name="height" onChange={changeDoorParamHandler} value={order.height} min={1800} max={2200} />
                                         </Form.Group>
                                     </Col>
                                     <Col>
                                         <Form.Group className="mb-3">
                                             <Form.Label>Door width</Form.Label>
-                                            <Form.Control type="number" placeholder="Enter door width" name="width" onChange={changeDoorParamHandler} value={doorParams.width} min={500} max={900}  />
+                                            <Form.Control type="number" placeholder="Enter door width" name="width" onChange={changeDoorParamHandler} value={order.width} min={500} max={900}  />
                                         </Form.Group>
                                     </Col>
                                     <Col>
-                                    <Form.Group className="mb-3">
-                                                    <Form.Check type="radio" label="Right side" />
-                                                </Form.Group>
-                                                <Form.Group className="mb-3">
-                                                    <Form.Check type="radio" label="Left side" />
-                                                </Form.Group>
+                                    <Form.Group className="mb-3" controlId="right-opening">
+                                        <Form.Check type="radio" label="Right side" onChange={changeDoorOpeningHandler} value={'right'} checked={order.opening === 'right'} name="opening" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="left-opening">
+                                        <Form.Check type="radio" label="Left side" onChange={changeDoorOpeningHandler} value={'left'} checked={order.opening === 'left'} name="opening" />
+                                    </Form.Group>
                                     </Col>
                                     <Col xs={12}>
                                         <Button variant="primary" type="submit">

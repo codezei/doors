@@ -23,7 +23,7 @@ interface IDoorImageProps {
 const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps, doorWidth, doorHeight})=> {
 
     // const doorParams: IParams = new Params (2000, 800,  70, 10, 3, 0.4)
-    const [doorParams, setDoorParams] = React.useState<IParams>(new Params (doorHeight || 2000, doorWidth || 800,  70, 10, 3, 0.4))
+    const [doorParams, setDoorParams] = React.useState<IParams>(new Params ( 2000 || doorHeight, 800 || doorWidth,  70, 10, 3, 0.4))
     const [renderData, setRenderData] = React.useState<{veneer: IRenderData[], decor?: IRenderData[]}>(transformRenderData(render))
     
 
@@ -57,11 +57,6 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
         );
         return JSON.parse(JSON.stringify(result))
     }
-    
-    
-    
-
-
     function drawDoor () {
 
         if (canvasBlockRef.current && canvasFillRef.current && canvasFillHorizontalRef.current && activeVeneerProps) {
@@ -190,17 +185,18 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
             drawDoor()
         }
         
-    }, [activeDecorProps, activeVeneerProps])
+    }, [activeDecorProps, activeVeneerProps, renderData])
 
     React.useEffect(()=>{
-        if (renderData && doorHeight && doorWidth) {
-            setDoorParams(new Params (doorHeight, doorWidth,  70, 10, 3, 0.4))
-            setRenderData(transformRenderData(render))
-            drawDoor()
-   
+        if (doorHeight && doorWidth) {
+            setDoorParams({...doorParams, ...new Params (doorHeight, doorWidth,  70, 10, 3, 0.4)})
         }
         
     }, [doorWidth, doorHeight])
+
+    React.useEffect(()=>{
+        setRenderData(transformRenderData(render))
+    }, [doorParams])
 
     return ( 
         <>
