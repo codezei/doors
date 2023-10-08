@@ -6,11 +6,11 @@ interface IOrder {
 }
 
 interface IState {
-    orders: IOrder[]
+    cart: IOrder[]
 }
 
 const initialState: IState = {
-    orders: []
+    cart: []
 }
 
 
@@ -18,12 +18,12 @@ const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        addOrder (state, action: PayloadAction<IOrder>) {
-            state.orders.push(action.payload)
+        addToCart (state, action: PayloadAction<IOrder>) {
+            state.cart.push(action.payload)
         }
     }
 
 })
 
-export const {addOrder} = orderSlice.actions
+export const {addToCart} = orderSlice.actions
 export default orderSlice.reducer

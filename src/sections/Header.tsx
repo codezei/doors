@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom'
 import { Container, Row, Navbar, Nav } from 'react-bootstrap';
-
-
+import {AiOutlineShoppingCart} from 'react-icons/ai'
+import { useAppSelector } from '../hooks/store.hooks';
 
 function Header() {
+    const cartCount = useAppSelector(state=>state.orderReducer.cart.length)
     return ( 
         <header>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -12,12 +13,16 @@ function Header() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav>
-                        <Nav.Link as={Link} to="/">
-                            Home
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/about">
-                            About Us
-                        </Nav.Link>
+                            <Nav.Link as={Link} to="/">
+                                Home
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/about">
+                                About Us
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/cart">
+                                <AiOutlineShoppingCart></AiOutlineShoppingCart>
+                                {cartCount}
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

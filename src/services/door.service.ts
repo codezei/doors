@@ -13,14 +13,18 @@ export const doorsAPI = createApi({
             query: () => ({
                 url: '/doors.json'
             }),
-            transformResponse: (response: IDoor[], id) => {
-                return simulatedDelay(response, 5000)
+            transformResponse: (response: IDoor[]) => {
+                return simulatedDelay(response, 1000)
             }
         }),
         getFills: builder.query({
             query: () => ({
                 url: '/fills.json'
             })
+            ,
+            transformResponse: (response: IFills) => {
+                return simulatedDelay(response, 1000)
+            }
         }),
         getCollections: builder.query({
             query: () => ({

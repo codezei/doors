@@ -184,7 +184,6 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
         if (renderData) {
             drawDoor()
         }
-        
     }, [activeDecorProps, activeVeneerProps, renderData])
 
     React.useEffect(()=>{

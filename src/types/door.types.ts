@@ -58,5 +58,15 @@ interface IParams {
     handleHeight: number;
 }
 
+interface IOrder {
+    id: string,
+    door?: IDoor,
+    width: number,
+    height: number,
+    opening: string,
+    veneer?: IFillVeneer,
+    decor?: IFillDecor
+}
 
-export type {IDoor, IRenderPart, IRender, IFillVeneer, IFillDecor, IFills, IParams, IRenderData}
+
+export type {IDoor, IRenderPart, IRender, IFillVeneer, IFillDecor, IFills, IParams, IRenderData, IOrder}

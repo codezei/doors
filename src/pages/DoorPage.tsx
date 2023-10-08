@@ -1,11 +1,13 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { doorsAPI } from "../services/door.service";
-import React, { ChangeEvent } from "react";
-import { IDoor, IFillDecor, IFillVeneer } from "../types/door.types";
+import React, { ChangeEvent, FormEvent } from "react";
+import { IDoor, IFillDecor, IFillVeneer, IOrder } from "../types/door.types";
 import DoorImage from "../components/DoorImage";
 import { styled } from "styled-components";
 import Loader from "../components/Loader";
 import { Card, Container, Col, Row, ListGroup, Button, Form } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../hooks/store.hooks";
+import { addToCart } from "../store/reducers/orderSlice";
 
 
 const Fill = styled.button<{ $active: boolean }>`
@@ -22,88 +24,106 @@ const Fill = styled.button<{ $active: boolean }>`
     background: linear-gradient(135deg, rgba(255,255,255,0) 0%, ${props => props.$active && "rgba(255,255,255,0.4) 50%" || "rgba(255,255,255,0.2) 50%"},rgba(255,255,255,0) 100%);
 `
 
-function DoorPage() {
-    const { id } = useParams()
+interface IDoorProps {
+    orderProps?: IOrder
+}
 
+const DoorPage : React.FC<IDoorProps> = ({orderProps})=> {
+    const { id } = useParams()
     const { door } = doorsAPI.useGetDoorsQuery(undefined, {
         selectFromResult: ({ data }) => ({
-            door: data?.filter((door) => door.id === id)[0],
+            door: (data?.filter((door) => door.id === id)[0])
         }),
     })
-
     const { data: fills, error: errorFills, isLoading: isLoadingFills } = doorsAPI.useGetFillsQuery('')
-
-    const [activeVeneer, setActiveVeneer] = React.useState<IFillVeneer | null>(null)
-    const [activeDecor, setActiveDecor] = React.useState<IFillDecor | null>(null)
-
-    const [order, setOrder] = React.useState({
+    const [order, setOrder] = React.useState<IOrder>({
+        id: React.useId(),
         width: 800,
         height: 2000,
-        opening: 'left'
+        opening: 'left',
     })
-    const [doorLoad, setDoorLoad] = React.useState(false)
+    const dispatch = useAppDispatch()
 
     function changeActiveVeneerHandler(newActiveVeneer: IFillVeneer) {
-        setActiveVeneer(newActiveVeneer)
+        setOrder({...order, veneer: newActiveVeneer})
     }
     function changeActiveDecorHandler(newActiveDecor: IFillDecor) {
-        setActiveDecor(newActiveDecor)
+        setOrder({...order, decor: newActiveDecor})
     }
     function changeDoorParamHandler (e: ChangeEvent<HTMLInputElement>) {
         if (+e.target.value < +e.target.max && +e.target.value > +e.target.min) {
             setOrder({...order, [e.target.name]: +e.target.value})
         }
-        
     } 
     function changeDoorOpeningHandler (e: ChangeEvent<HTMLInputElement>) {
         setOrder({...order, [e.target.name]: e.target.value})
     }
-
+    function addToCartHandler (e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        dispatch(addToCart(order))
+    }
 
     React.useEffect(() => {
-        if (fills && fills.veneer) {
-            setActiveVeneer(fills.veneer[Math.floor(Math.random() * fills.veneer.length)])
+        if (fills && fills.veneer && !order.veneer) {
+            setOrder((prevOrder)=>{return {
+                ...prevOrder, veneer: fills.veneer[Math.floor(Math.random() * fills.veneer.length)]
+            }})
         }
-        if (fills && fills?.decor) {
-            setActiveDecor(fills.decor[Math.floor(Math.random() * fills.decor.length)])
+        if (fills && fills?.decor && !order.decor) {
+            setOrder((prevOrder)=>{return {
+                ...prevOrder, decor: fills.decor && fills.decor[Math.floor(Math.random() * fills.decor.length)]
+            }})
         }
     }, [fills])
 
+    React.useEffect(() => {
+        if (door) {
+            setOrder((prevOrder)=> {
+                return {...prevOrder, door: door}
+            })
+        }
+    }, [door])
+
+    React.useEffect(() => {
+        setOrder((prevOrder)=> {
+            return {...prevOrder, ...orderProps}
+        })
+    }, [orderProps])
 
     return (
         <main>
             <Container>
-                {door ?
+                {order.door ?
                     <Card>
                         <Card.Header>
-                            <Card.Title>{door.name}</Card.Title>
+                            <Card.Title>{order.door.name}</Card.Title>
                         </Card.Header>
                         <Card.Body>
                             <Row>
                                 <Col xs={"auto"}>
-                                    {doorLoad ? <Loader></Loader> : door && <DoorImage render={door.render} activeDecorProps={activeDecor} activeVeneerProps={activeVeneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>}
+                                    {<DoorImage render={order.door.render} activeDecorProps={order.decor} activeVeneerProps={order.veneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>}
                                 </Col>
                                 <Col>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item>
-                                            <b>Collection:</b> {door.collection.name}
+                                            <b>Collection:</b> {order.door.collection.name}
                                         </ListGroup.Item>
                                         <ListGroup.Item>
-                                            <b>Description:</b> {door.description}
+                                            <b>Description:</b> {order.door.description}
                                         </ListGroup.Item>
-                                        <ListGroup.Item><b>Price:</b> &mdash;{door.price} $</ListGroup.Item>
+                                        <ListGroup.Item><b>Price:</b> &mdash;{order.door.price} $</ListGroup.Item>
                                         <ListGroup.Item>
                                             <b>Coverage:</b><br />
-                                            {fills.veneer && fills.veneer.map((item: IFillVeneer) => {
-                                                return <Fill onClick={() => { changeActiveVeneerHandler(item) }} key={item.name} $active={activeVeneer?.name === item.name} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + item.image.thumbnail})` }}></Fill>
+                                            {fills && fills.veneer && fills.veneer.map((item: IFillVeneer) => {
+                                                return <Fill onClick={() => { changeActiveVeneerHandler(item) }} key={item.name} $active={order.veneer?.name === item.name} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + item.image.thumbnail})` }}></Fill>
                                             })}
                                         </ListGroup.Item>
                                         {
-                                            door.render?.decor &&
+                                            order.door.render?.decor &&
                                             <ListGroup.Item>
                                                 <b>Decor:</b><br />
-                                                {fills.decor && fills.decor.map((item: IFillDecor) => {
-                                                    return <Fill onClick={() => { changeActiveDecorHandler(item) }} key={item.name} $active={activeDecor?.name === item.name} style={{ backgroundColor: item.color }}></Fill>
+                                                {fills && fills?.decor && fills.decor.map((item: IFillDecor) => {
+                                                    return <Fill onClick={() => { changeActiveDecorHandler(item) }} key={item.name} $active={order.decor?.name === item.name} style={{ backgroundColor: item.color }}></Fill>
                                                 })}
                                             </ListGroup.Item>
                                         }
@@ -112,7 +132,7 @@ function DoorPage() {
                             </Row>
                         </Card.Body>
                         <Card.Footer>
-                            <Form>
+                            <Form onSubmit={addToCartHandler}>
                                 <Row>
                                     <Col>
                                         <Form.Group className="mb-3">
@@ -136,7 +156,7 @@ function DoorPage() {
                                     </Col>
                                     <Col xs={12}>
                                         <Button variant="primary" type="submit">
-                                            Submit
+                                            To cart
                                         </Button>
                                     </Col>
                                 </Row>
