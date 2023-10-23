@@ -1,29 +1,37 @@
 import { Accordion, Container } from "react-bootstrap"
-import { useAppSelector } from "../hooks/store.hooks"
+import { useAppDispatch, useAppSelector } from "../hooks/store.hooks"
 import DoorDetails from "../components/DoorDetails"
-import { IOrder } from "../types/door.types"
+import { IDoor, IOrder } from "../types/door.types"
+import { MdDeleteForever } from "react-icons/md"
+import { deleteFromCart } from "../store/reducers/orderSlice"
 
 const Cart: React.FC = ()=>{
     const doors: IOrder[] = useAppSelector(state=>state.orderReducer.cart)
+
+
     return (
         <section>
             <Container>
-            <Accordion defaultActiveKey="0">
                 {
-                    doors.length ? doors.map((door: any, doorIndex: number)=>{
-                        return (
-                            <Accordion.Item eventKey={String(doorIndex)} key={`door-${doorIndex}`}>
-                                <Accordion.Header>
-                                    {`# ${doorIndex + 1}. ${door.door.name}/${door.veneer.name}/${door?.decor?.name || door.veneer.name}. ${door.height}*${door.width}. ${door.opening}`}
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                    <DoorDetails orderProps={door}></DoorDetails>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        )
-                    }) : "Сart is empty"
+                    doors.length ? <Accordion defaultActiveKey="0">
+                        {
+                            doors.map((door: IOrder, doorIndex: number)=>{
+                                return (
+                                    <Accordion.Item eventKey={String(doorIndex)} key={`door-${doorIndex}`}>
+                                        <Accordion.Header>
+
+                                            {`# ${doorIndex + 1}. ${door?.door?.name}/${door?.veneer?.name}/${door?.decor?.name || door?.veneer?.name}. ${door.height}*${door.width}. ${door.opening}`}
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <DoorDetails orderProps={door}></DoorDetails>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                )
+                            }) 
+                        }
+                    </Accordion> : "Basket is empty"
                 }
-                </Accordion>
+
             </Container>
         </section>
     )

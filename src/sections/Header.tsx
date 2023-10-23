@@ -12,16 +12,17 @@ function Header() {
                     <Navbar.Brand as={Link} to="/">DoorSStyle</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav>
+                        <Nav className='align-items-center'>
                             <Nav.Link as={Link} to="/">
                                 Home
                             </Nav.Link>
                             <Nav.Link as={Link} to="/about">
                                 About Us
                             </Nav.Link>
-                            <Nav.Link as={Link} to="/cart">
+                            <Nav.Link as={Link} to="/cart" className='position-relative fs-4'>
                                 <AiOutlineShoppingCart></AiOutlineShoppingCart>
-                                {cartCount}
+                                <span className='fs-6 bottom-0 position-absolute right-0 bg-primary text-white rounded-4 px-2 width-4'>{cartCount}</span>
+                                
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { styled } from 'styled-components';
-import { IFillVeneer, IFills, IRenderPart, IRenderData, IFillDecor, IParams, IRender } from '../types/door.types';
-import { doorsAPI, Params } from '../services/door.service';
+import { IFillVeneer, IRenderPart, IRenderData, IFillDecor, IParams, IRender } from '../types/door.types';
+import { Params } from '../services/door.service';
 
-const CanvasDoor = styled.canvas`
+const CanvasDoor = styled.canvas<{$active: boolean}>`
 width: 200px;
 display: block;
+transform: ${props=> props.$active ? 'scale(-1, 1)' : 'scale(1, 1)'}
 `
 const CanvasTemp = styled.canvas`
 display: none;
@@ -16,11 +17,12 @@ interface IDoorImageProps {
     activeVeneerProps?: IFillVeneer | null,
     activeDecorProps?: IFillDecor | null,
     doorWidth?: number,
-    doorHeight?: number
+    doorHeight?: number,
+    opening?: string
 }
 
 
-const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps, doorWidth, doorHeight})=> {
+const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeVeneerProps, doorWidth, doorHeight, opening})=> {
 
     // const doorParams: IParams = new Params (2000, 800,  70, 10, 3, 0.4)
     const [doorParams, setDoorParams] = React.useState<IParams>(new Params ( 2000 || doorHeight, 800 || doorWidth,  70, 10, 3, 0.4))
@@ -60,9 +62,9 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
     function drawDoor () {
 
         if (canvasBlockRef.current && canvasFillRef.current && canvasFillHorizontalRef.current && activeVeneerProps) {
-            const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d");
-            const fillCtx : CanvasRenderingContext2D | null = canvasFillRef.current.getContext("2d");
-            const fillHorizontalCtx : CanvasRenderingContext2D | null = canvasFillHorizontalRef.current.getContext("2d");
+            const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d", { willReadFrequently: true });
+            const fillCtx : CanvasRenderingContext2D | null = canvasFillRef.current.getContext("2d", { willReadFrequently: true });
+            const fillHorizontalCtx : CanvasRenderingContext2D | null = canvasFillHorizontalRef.current.getContext("2d", { willReadFrequently: true });
             const fillImage : HTMLImageElement = new Image()
             fillImage.src = process.env.PUBLIC_URL +'/'+ activeVeneerProps.image.full
             const furnitureImage : HTMLImageElement = new Image ()
@@ -129,8 +131,8 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
             
         }
         if (activeDecorProps && canvasDecorRef.current && canvasBlockRef.current) {
-            const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d");
-            const decorCtx : CanvasRenderingContext2D | null = canvasDecorRef.current.getContext("2d");
+            const doorCtx : CanvasRenderingContext2D | null = canvasBlockRef.current.getContext("2d", { willReadFrequently: true });
+            const decorCtx : CanvasRenderingContext2D | null = canvasDecorRef.current.getContext("2d", { willReadFrequently: true });
             const decorImage : HTMLImageElement = new Image ()
             decorImage.src = process.env.PUBLIC_URL +'/'+ activeDecorProps.image
             decorImage.onload = function (): void {
@@ -203,6 +205,7 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                 width={doorParams.widthBlock}
                 height={doorParams.heightBlock}
                 ref={canvasBlockRef}
+                $active={opening === 'left'}
             ></CanvasDoor>
             <CanvasTemp
                 width={doorParams.widthBlock}

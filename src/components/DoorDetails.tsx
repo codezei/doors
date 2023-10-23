@@ -1,5 +1,5 @@
 
-import { Card, Col, Row, ListGroup } from "react-bootstrap";
+import { Card, Col, Row, ListGroup, Button } from "react-bootstrap";
 import React from "react";
 import { IDoor, IOrder } from "../types/door.types";
 import DoorImage from "../components/DoorImage";
@@ -10,6 +10,8 @@ import DoorDecorColor from "./DoorDecorColor";
 import DoorForm from "./DoorForm";
 import { useAppDispatch } from "../hooks/store.hooks";
 import { changeCart } from "../store/reducers/orderSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import { deleteFromCart } from "../store/reducers/orderSlice"
 
 interface IDoorProps {
     orderProps?: IOrder,
@@ -19,13 +21,15 @@ interface IDoorProps {
 const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
     const dispatch = useAppDispatch()
     const [order, setOrder] = React.useState<IOrder>({
-        id: React.useId(),
+        id: nanoid(),
         width: 800,
         height: 2000,
-        opening: 'left',
+        opening: 'right',
+        ...orderProps
     })
-
-
+    function deleteFromCartHandler (id: string): void {
+        dispatch(deleteFromCart(id))
+    }
     React.useEffect(() => {
         if (doorProps) {
             setOrder((prevOrder) => {
@@ -33,12 +37,6 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
             })
         }
     }, [doorProps])
-
-    React.useEffect(() => {
-        setOrder((prevOrder) => {
-            return { ...prevOrder, ...orderProps }
-        })
-    }, [orderProps])
 
     React.useEffect(() => {
         dispatch(changeCart(order))
@@ -56,7 +54,7 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
                 <Card.Body>
                     <Row>
                         <Col xs={"auto"}>
-                            <DoorImage render={order.door.render} activeDecorProps={order.decor} activeVeneerProps={order.veneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>
+                            <DoorImage opening={order.opening} render={order.door.render} activeDecorProps={order.decor} activeVeneerProps={order.veneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>
                         </Col>
                         <Col>
                             <ListGroup variant="flush">
@@ -68,7 +66,15 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
                     </Row>
                 </Card.Body>
                 <Card.Footer>
-                    <DoorForm order={order} setOrder={setOrder}></DoorForm>
+                    <DoorForm order={order} setOrder={setOrder}>
+                        <Col xs={12}>
+                            {!orderProps ? 
+                                <Button variant="primary" type="submit">To cart</Button>
+                                : <Button variant="danger" type="button" onClick={()=>{deleteFromCartHandler(order.id)}}>Remove</Button>
+                            }
+                        </Col> 
+                            
+                    </DoorForm>
                 </Card.Footer>
             </Card>
             : <Loader></Loader>

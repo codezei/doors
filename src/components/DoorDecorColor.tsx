@@ -7,7 +7,7 @@ import { styled } from "styled-components";
 
 interface IDoorVeneerColorProps {
     order: IOrder,
-    setOrder: any
+    setOrder: React.Dispatch<React.SetStateAction<IOrder>>
 }
 
 const Fill = styled.button<{ $active: boolean }>`

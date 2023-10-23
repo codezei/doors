@@ -1,16 +1,20 @@
 
 import Door from './Door';
 import { doorsAPI } from '../services/door.service';
-import type { IDoor } from '../types/door.types';
+import type { IDoor, IFills } from '../types/door.types';
 import {Row, Col} from "react-bootstrap"
+import React from 'react'
 
+interface IDoorsProps {
+    doors: IDoor[],
+    fills: IFills
+}
 
-function Doors() {
-    const {data: doors, error : errorDoors, isLoading : isLoadingDoors} = doorsAPI.useGetDoorsQuery('')
-    const {data: fills, error : errorFills, isLoading : isLoadingFills} = doorsAPI.useGetFillsQuery('')
+const Doors:React.FC<IDoorsProps> = ({doors, fills})=> {
+
     return ( 
         <Row>
-            {!isLoadingFills && fills && !isLoadingDoors && doors && doors.map((door: IDoor)=>{
+            {doors.map((door: IDoor)=>{
                 return (
                 <Col xs={"auto"} key={door.id}>
                     <Door door={door} fills={fills}></Door>
