@@ -1,0 +1,92 @@
+{
+    "veneer": [
+        {
+            "name": "Ebony",
+            "image": {
+                "thumbnail": "ebony-thumb.jpg",
+                "full": "ebony.jpg"
+            }
+        },
+        {
+            "name": "Nut",
+            "image": {
+                "thumbnail": "nut-thumb.jpg",
+                "full": "nut.jpg"
+            }
+        },
+        {
+            "name": "Apus",
+            "image": {
+                "thumbnail": "apus-thumb.jpg",
+                "full": "apus.jpg"
+            }
+        },
+        {
+            "name": "Palicandr",
+            "image": {
+                "thumbnail": "palicandr-thumb.jpg",
+                "full": "palicandr.jpg"
+            }
+        },
+        {
+            "name": "Zebrano",
+            "image": {
+                "thumbnail": "zebrano-thumb.jpg",
+                "full": "zebrano.jpg"
+            }
+        },
+        {
+            "name": "Wear american",
+            "image": {
+                "thumbnail": "wear-american-thumb.jpg",
+                "full": "wear-american.jpg"
+            }
+        }
+        ,
+        {
+            "name": "Smoked oak",
+            "image": {
+                "thumbnail": "smoked-oak-thumb.jpg",
+                "full": "smoked-oak.jpg"
+            }
+        }
+    ],
+    "decor": [
+        {
+            "name": "Black",
+            "color": "black",
+            "image": "reflection-2.jpg"
+        },
+        {
+            "name": "Darkred",
+            "color": "darkred",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "Blue",
+            "color": "darkblue",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "Gray",
+            "color": "gray",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "White",
+            "color": "white",
+            "image": "reflection.jpg"
+        },
+        {
+            "name": "Gold",
+            "color": "#785f00",
+            "image": "reflection-2.jpg"
+        }
+        ,
+        {
+            "name": "Antiquewhite",
+            "color": "antiquewhite",
+            "image": "reflection-2.jpg"
+        }
+    ]
+}
