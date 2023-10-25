@@ -7,7 +7,7 @@ const simulatedDelay = <T>(data: T, delayMs: number): Promise<T> =>
 
 export const doorsAPI = createApi({
     reducerPath: 'doorsAPI',
-    baseQuery: fetchBaseQuery({baseUrl: './db'}),
+    baseQuery: fetchBaseQuery({baseUrl: process.env.PUBLIC_URL + 'db'}),
     endpoints: (builder)=>({
         getDoors: builder.query({
             query: () => ({
