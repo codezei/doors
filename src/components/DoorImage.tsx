@@ -69,7 +69,7 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
             const fillImage : HTMLImageElement = new Image()
             fillImage.src = process.env.PUBLIC_URL +'/'+ activeVeneerProps.image.full
             const furnitureImage : HTMLImageElement = new Image ()
-            furnitureImage.src = process.env.PUBLIC_URL +'doorhandle.png'
+            furnitureImage.src = process.env.PUBLIC_URL +'/doorhandle.png'
 
             if (doorCtx) {
                 doorCtx.clearRect(0, 0, canvasBlockRef.current.width, canvasBlockRef.current.height)

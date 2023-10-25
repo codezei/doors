@@ -47,7 +47,7 @@ const DoorVeneerColor: React.FC<IDoorVeneerColorProps> = ({ order, setOrder })=>
         <ListGroup.Item>
             <b>Coverage:</b><br />
             {fills && fills.veneer && fills.veneer.map((item: IFillVeneer) => {
-                return <Fill onClick={() => { changeActiveVeneerHandler(item) }} key={item.name} $active={order.veneer?.name === item.name} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + item.image.thumbnail})` }}></Fill>
+                return <Fill onClick={() => { changeActiveVeneerHandler(item) }} key={item.name} $active={order.veneer?.name === item.name} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/' + item.image.thumbnail})` }}></Fill>
             })}
         </ListGroup.Item>
     )
