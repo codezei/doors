@@ -16,6 +16,7 @@ function App() {
           <Route path=":id" element={<DoorPage />}></Route>
           <Route path="cart" element={<Cart />}></Route>
         </Route>
+        <Route path="*" element={<Home />}/>
 
       </Routes>
     </div>
