@@ -1,5 +1,5 @@
 
-import { Card, Col, Row, ListGroup, Button } from "react-bootstrap";
+import { Card, Col, Row, ListGroup, Button, Container } from "react-bootstrap";
 import React from "react";
 import { IDoor, IOrder } from "../types/door.types";
 import DoorImage from "../components/DoorImage";
@@ -44,7 +44,8 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
 
 
     return (
-        <>
+        <section>
+            <Container>
             {
                 order.door ? 
                 <Card>
@@ -52,11 +53,11 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
                     <Card.Title>{order.door.name}</Card.Title>
                 </Card.Header>
                 <Card.Body>
-                    <Row>
-                        <Col xs={"auto"}>
+                    <Row className="justify-content-center justify-content-md-start">
+                        <Col xs={"auto"} md={3}>
                             <DoorImage opening={order.opening} render={order.door.render} activeDecorProps={order.decor} activeVeneerProps={order.veneer} doorHeight={order.height} doorWidth={order.width}></DoorImage>
                         </Col>
-                        <Col>
+                        <Col xs={12} md={9}>
                             <ListGroup variant="flush">
                                 <DoorInfo door={order.door}></DoorInfo>
                                 <DoorVeneerColor order={order} setOrder={setOrder}></DoorVeneerColor>
@@ -70,7 +71,8 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
                         <Col xs={12}>
                             {!orderProps ? 
                                 <Button variant="primary" type="submit">To cart</Button>
-                                : <Button variant="danger" type="button" onClick={()=>{deleteFromCartHandler(order.id)}}>Remove</Button>
+                                : 
+                                <Button variant="danger" type="button" onClick={()=>{deleteFromCartHandler(order.id)}}>Remove</Button>
                             }
                         </Col> 
                             
@@ -79,7 +81,8 @@ const DoorDetails: React.FC<IDoorProps> = ({ orderProps, doorProps }) => {
             </Card>
             : <Loader></Loader>
             }
-        </>
+            </Container>
+        </section>
 
     )
 }

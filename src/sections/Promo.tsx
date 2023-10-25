@@ -1,11 +1,20 @@
 import { Container } from "react-bootstrap";
+import promoBg from '../images/promo-bg.jpg'
 
-function Promo() {
+
+
+const Promo: React.FC = ()=> {
     return (
 
-        <section>
+        <section style={{
+            paddingTop: 200,
+            paddingBottom: 200,
+            backgroundImage: `url(${promoBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom center'
+        }}>
             <Container>
-                <h1>Stylish and cozy interior <br/>can only be with doors "Doors of Style"</h1>
+                <h1 style={{color: '#fff'}}>Stylish and cozy interior <br/>can only be with doors "Doors of Style"</h1>
             </Container>
         </section>
 

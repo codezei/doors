@@ -16,7 +16,7 @@ interface IDoorProps {
 const Door: React.FC<IDoorProps> = ({door, fills}) => {
 
     return ( 
-        <Card as={Link} to={`/${door.id}`}>
+        <Card as={Link} to={`/${door.id}`} style={{textDecoration: 'none'}}>
             <Card.Body>
                 <DoorImage 
                     render={door.render} 

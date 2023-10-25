@@ -8,10 +8,10 @@
             }
         },
         {
-            "name": "Oak",
+            "name": "Nut",
             "image": {
-                "thumbnail": "oak-thumb.jpg",
-                "full": "oak.jpg"
+                "thumbnail": "nut-thumb.jpg",
+                "full": "nut.jpg"
             }
         },
         {
@@ -26,6 +26,28 @@
             "image": {
                 "thumbnail": "palicandr-thumb.jpg",
                 "full": "palicandr.jpg"
+            }
+        },
+        {
+            "name": "Zebrano",
+            "image": {
+                "thumbnail": "zebrano-thumb.jpg",
+                "full": "zebrano.jpg"
+            }
+        },
+        {
+            "name": "Wear american",
+            "image": {
+                "thumbnail": "wear-american-thumb.jpg",
+                "full": "wear-american.jpg"
+            }
+        }
+        ,
+        {
+            "name": "Smoked oak",
+            "image": {
+                "thumbnail": "smoked-oak-thumb.jpg",
+                "full": "smoked-oak.jpg"
             }
         }
     ],
@@ -58,6 +80,12 @@
         {
             "name": "Gold",
             "color": "#785f00",
+            "image": "reflection-2.jpg"
+        }
+        ,
+        {
+            "name": "Antiquewhite",
+            "color": "antiquewhite",
             "image": "reflection-2.jpg"
         }
     ]

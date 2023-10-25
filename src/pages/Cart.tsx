@@ -4,6 +4,7 @@ import DoorDetails from "../components/DoorDetails"
 import { IDoor, IOrder } from "../types/door.types"
 import { MdDeleteForever } from "react-icons/md"
 import { deleteFromCart } from "../store/reducers/orderSlice"
+import EmptyMessage from "../components/EmptyMessage"
 
 const Cart: React.FC = ()=>{
     const doors: IOrder[] = useAppSelector(state=>state.orderReducer.cart)
@@ -29,7 +30,7 @@ const Cart: React.FC = ()=>{
                                 )
                             }) 
                         }
-                    </Accordion> : "Basket is empty"
+                    </Accordion> : <EmptyMessage message="Basket is empty"></EmptyMessage>
                 }
 
             </Container>

@@ -142,5 +142,58 @@
                 }
             ]
         }
+    },
+    {
+        "id": "elegant",
+        "name": "Elegant",
+        "price": 400,
+        "description": "Lorem ipsum",
+        "collection": {
+            "name": "Moderna",
+            "value": "moderna"
+        },
+        "render": {
+            "veneer": [
+                {
+                    "width": [120],
+                    "height": ["heightDoor"],
+                    "startX": ["widthPlatband", "gapSide"],
+                    "startY": ["widthPlatband", "gapSide"]
+                },
+                {
+                    "width": ["widthDoor", -120, -60],
+                    "height": ["heightDoor"],
+                    "startX": ["widthPlatband", "gapSide", 120, 60],
+                    "startY": ["widthPlatband", "gapSide"]
+                },
+                {
+                    "width": ["widthPlatband"],
+                    "height": ["heightDoor", "gapBottom", "widthPlatband", "gapSide"],
+                    "startX": [0],
+                    "startY": [0]
+                },
+                {
+                    "width": ["widthPlatband"],
+                    "height": ["heightDoor", "gapBottom", "widthPlatband", "gapSide"],
+                    "startX": ["widthDoor", "gapSide", "gapSide", "widthPlatband"],
+                    "startY": [0]
+                },
+                {
+                    "width": ["widthDoor", "gapSide", "gapSide"],
+                    "height": ["widthPlatband"],
+                    "startX": ["widthPlatband"],
+                    "startY": [0]
+    
+                }
+            ],
+            "decor": [
+                {
+                    "width": [60],
+                    "height": ["heightDoor"],
+                    "startX": ["widthPlatband", "gapSide", 120],
+                    "startY": ["widthPlatband", "gapSide"]
+                }
+            ]
+        }
     }
 ]

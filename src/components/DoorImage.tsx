@@ -6,6 +6,7 @@ import { Params } from '../services/door.service';
 
 const CanvasDoor = styled.canvas<{$active: boolean}>`
 width: 200px;
+max-width: 100%;
 display: block;
 transform: ${props=> props.$active ? 'scale(-1, 1)' : 'scale(1, 1)'}
 `
@@ -116,6 +117,13 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                                 veneerItem.width,
                                 veneerItem.height
                             );
+
+                            // doorCtx.shadowColor = "rgba(0, 0, 0, 0.5)";
+                            // doorCtx.shadowBlur = 5;
+                            // doorCtx.shadowOffsetX = 0;
+                            // doorCtx.shadowOffsetY = 0;
+                            // doorCtx.strokeRect(veneerItem.startX, veneerItem.startY, veneerItem.width,
+                            //     veneerItem.height);
                         }
                     }
                 })
@@ -168,13 +176,15 @@ const DoorImage: React.FC<IDoorImageProps> = ({render, activeDecorProps, activeV
                             doorCtx.fillStyle = gradient;
                             doorCtx.fillRect(decorItem.startX, decorItem.startY, decorItem.width,
                                 decorItem.height);
+
+
                             // тень
-                            // doorCtx.shadowColor = "rgba(0, 0, 0, 0.5)";
-                            // doorCtx.shadowBlur = 10;
-                            // doorCtx.shadowOffsetX = 5;
-                            // doorCtx.shadowOffsetY = 5;
-                            // doorCtx.strokeRect(decorItem.startX, decorItem.startY, decorItem.width,
-                            //     decorItem.height);
+                            doorCtx.shadowColor = "rgba(0, 0, 0, 0.2)";
+                            doorCtx.shadowBlur = 10;
+                            doorCtx.shadowOffsetX = 0;
+                            doorCtx.shadowOffsetY = 0;
+                            doorCtx.strokeRect(decorItem.startX, decorItem.startY, decorItem.width,
+                                decorItem.height);
                         }
                     }
                 })

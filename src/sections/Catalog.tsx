@@ -4,6 +4,7 @@ import Filter from "../components/Filter";
 import { doorsAPI } from '../services/door.service';
 import React from 'react'
 import { IDoor } from "../types/door.types";
+import Loader from "../components/Loader";
 
 function Catalog () {
 
@@ -17,14 +18,14 @@ function Catalog () {
     }, [doors])
 
     return (
-        <section>
+        <section className="py-5">
             <Container>
                 <Row>
                     <Col xs={12} md={3}>
                         {!isLoadingFills && fills && !isLoadingDoors && doors && <Filter doors={doors} setFilteredDoors={setFilteredDoors}></Filter>}
                     </Col>
                     <Col xs={12} md={9}>
-                        {!isLoadingFills && fills && !isLoadingDoors && filteredDoors && <Doors doors={filteredDoors} fills={fills}></Doors>}
+                        {!isLoadingFills && fills && !isLoadingDoors && filteredDoors ? <Doors doors={filteredDoors} fills={fills}></Doors> : <Loader></Loader>}
                     </Col>
                 </Row>
             </Container>
